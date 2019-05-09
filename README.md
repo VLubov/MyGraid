@@ -1,2 +1,2 @@
-# MyProjectAMO
+# MyGraid
 StudyAmoCRM
