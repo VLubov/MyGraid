@@ -8,15 +8,7 @@ auth_amo($mail, $hash, $sd);
 
 trait get_in_bd {
 	public function get_in_bd(){
-		$data = array (
-		  'add' => 
-		  array (
-		    0 => 
-		    array (
-		      'name' => $this->name,
-		    ),
-		  ),
-		);
+		$this->data;
 		$link = "https://vlubov.amocrm.ru/api/v2/{$this->type}";
 		$headers[] = "Accept: application/json";
 
@@ -26,7 +18,7 @@ trait get_in_bd {
 		curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-
 		undefined/2.0");
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->data));
 		curl_setopt($curl, CURLOPT_URL, $link);
 		curl_setopt($curl, CURLOPT_HEADER,false);
 		curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
@@ -49,7 +41,9 @@ trait get_in_bd {
 		$output= $whatTheType.' '."{$this->name}".' успешно добавлен'.'<br>'.'ID :'.PHP_EOL;
 		foreach($result as $v)
 		  if(is_array($v))
-		   echo $output.=$v['id'].'<br>';
+		  	?> <pre> <?
+		  	print_r($result);
+		    echo $output.=$v['id'].'<br>';
 		return $output;	
 	}
 }
@@ -59,9 +53,19 @@ class add_info {
 
 	public $name;
 	public $type;
-	public function add_company($name){
+	public $data;
+	public function add_company($name){	
 		$this->name = $name;
 		$this->type = 'companies';
+		$this->data = array (
+		  	'add' => 
+		  	array (
+		    	0 => 
+		    	array (
+		    		'name' => $this->name,
+		    ),
+		  ),
+		);
 		$this->get_in_bd();
 	}
 	public function add_contact($name){
@@ -77,6 +81,52 @@ class add_info {
 }
 
 
+class MultiSelect {
+	use get_in_bd;
+	public $data;
+	public $who;
+	public function add_multi_select($who){
+		$this->who = $who;
+		$this->type = 'fields';
+		switch ($this->who) {
+			case 'contacts':
+			$number_type = '1';
+			break;
+			case 'companies':
+			$number_type = '3';
+			break;
+			case 'leads':
+			$number_type = '2';
+			break;
+		}
+		$this->data = array (
+	  		'add' => 
+	  			array (
+	    			0 => 
+	    		array (
+		        'name' => 'Мультилист',
+		        'type' => '5',
+		        'element_type' => $number_type,
+		        'origin' => '123',
+		        'enums' => 
+		      array (
+		        0 => 'Значение 1',
+		        1 => ' Значение 2',
+		        2 => ' Значение 3',
+		        3 => ' Значение 4',
+		        4 => ' Значение 5',
+		        5 => ' Значение 6',
+		      ),
+		    ),
+		  ),
+	);
+	$this->get_in_bd();	
+	}
+}
+
+$new_multiselect = new MultiSelect();
+$new_multiselect->add_multi_select('contacts');
+
 $n = $_POST['n'];
 
 if ($n > 0 && $n < 10000) {
@@ -88,9 +138,8 @@ if ($n > 0 && $n < 10000) {
 		$new_object->add_contact($name);
 		$name = randString();
 		$new_object->add_lead($name);
-
-		
 	}
+
 } else {
 	echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }

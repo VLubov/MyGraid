@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (isset($_POST['enter_n'])) {
 	require_once($_SERVER['DOCUMENT_ROOT'].'/mygraid/functions.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/mygraid/my_logic.php');
