@@ -14,6 +14,7 @@ if (isset($_POST['enter_n'])) {
 		<p>Введите n</p>
 		<input type="text" name="n">
 		<p><input type="submit" value="Сгенерировать" name="enter_n"></p>
+		<p><input type="submit" value="Добавить мультисписок" name="add_multi_list"></p>
 	</form>
 
 </body>

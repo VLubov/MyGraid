@@ -26,7 +26,7 @@ trait get_in_bd {
 		$out = curl_exec($curl);
 		curl_close($curl);
 		$result = json_decode($out,TRUE);
-		switch ($this->type) {
+			switch ($this->type) {
 			case 'contacts':
 			$whatTheType = 'Контакт';
 			break;
@@ -37,14 +37,17 @@ trait get_in_bd {
 			$whatTheType = 'Сделка';
 			break;
 		}
+		if ($this->type == 'fields') {
+			?> <pre> <?
+			print_r($result);
+		}
 		$result=$result['_embedded']['items'];
 		$output= $whatTheType.' '."{$this->name}".' успешно добавлен'.'<br>'.'ID :'.PHP_EOL;
 		foreach($result as $v)
 		  if(is_array($v))
-		  	?> <pre> <?
-		  	print_r($result);
+		  	// ?> <pre> <?
+		  	// print_r($result);
 		    echo $output.=$v['id'].'<br>';
-		return $output;	
 	}
 }
 
@@ -80,12 +83,12 @@ class add_info {
 	}
 }
 
-
 class MultiSelect {
 	use get_in_bd;
 	public $data;
 	public $who;
 	public function add_multi_select($who){
+		
 		$this->who = $who;
 		$this->type = 'fields';
 		switch ($this->who) {
@@ -121,11 +124,109 @@ class MultiSelect {
 		  ),
 	);
 	$this->get_in_bd();	
+	echo 'Мультисписок добвален' . '<br>'; 
 	}
 }
 
+$values = [
+    0 => '107889',
+    1 => '107891',
+    2 => '107893',
+    3 => '107895',
+    4 => '107897',
+    5 => '107899',
+    ];
+$num = rand(1, 6);
+$k = array_rand($values, $num);
+// if (is_array($k)) {
+// foreach ($k as $key) {
+// 	$s = $values[$key];
+// 	$s2 = [$key => $s];
+	
+// }
+	
+// } else {
+// 	print_r($values[$k]);
+// }
+// print_r($s2);
+
+
+
+
+class UserList {
+	public function get_info_user(){
+		$link = 'https://vlubov.amocrm.ru/api/v2/contacts/';
+
+		$headers[] = "Accept: application/json";
+
+		 //Curl options
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+		curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-
+		undefined/2.0");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_URL, $link);
+		curl_setopt($curl, CURLOPT_HEADER,false);
+		curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
+		curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
+		$out = curl_exec($curl);
+		curl_close($curl);
+		$result = json_decode($out,TRUE);
+		foreach($result as $v)
+			  if(is_array($v))
+			  	$this->ID = $v['id'];
+	}
+	public function update_multi_select($values){
+		$this->get_info_user();
+		$this->value = $values;
+		$data = array (
+		  'update' => 
+		  array (
+		    0 => 
+		    array (
+		      'id' => $this->ID,
+		      'updated_at' => '1557687060',
+		      'custom_fields' => 
+		      array (
+		        0 => 
+		        array (
+		          'id' => '78083',
+		          'values' => 
+		          array (
+		            $this->value,
+		          ),
+		        ),
+		      ),
+		    ),
+		  ),
+		);
+		$link = "https://vlubov.amocrm.ru/api/v2/contacts";
+
+		$headers[] = "Accept: application/json";
+
+		 //Curl options
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+		curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-
+		undefined/2.0");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+		curl_setopt($curl, CURLOPT_URL, $link);
+		curl_setopt($curl, CURLOPT_HEADER,false);
+		curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
+		curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
+		$out = curl_exec($curl);
+		curl_close($curl);
+		$result = json_decode($out,TRUE);
+	}
+}
+// $new_info = new UserList();
+// $new_info->update_multi_select($values);
+
+if (isset($_POST['add_multi_list'])) {
 $new_multiselect = new MultiSelect();
 $new_multiselect->add_multi_select('contacts');
+}
 
 $n = $_POST['n'];
 
@@ -138,6 +239,7 @@ if ($n > 0 && $n < 10000) {
 		$new_object->add_contact($name);
 		$name = randString();
 		$new_object->add_lead($name);
+
 	}
 
 } else {
