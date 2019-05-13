@@ -43,9 +43,7 @@ trait get_in_bd {
 		$result=$result['_embedded']['items'];
 		$output= $whatTheType.' '."{$this->name}".' успешно добавлен'.'<br>'.'ID :'.PHP_EOL;
 		foreach($result as $v)
-		  if(is_array($v))
-		  	
-		  	// print_r($result);
+		  if(is_array($v)
 		    echo $output.=$v['id'].'<br>';
 	}
 }
@@ -118,29 +116,7 @@ class MultiSelect {
 	}
 }
 
-// $valuesid = [
-//     0 => '107889',
-//     1 => '107891',
-//     2 => '107893',
-//     3 => '107895',
-//     4 => '107897',
-//     5 => '107899',
-//     ];
-// $num = rand(1, 5); 
-// shuffle($valuesid);
-// $valuesid = array_slice($valuesid ,0, $num);
-// print_r($valuesid);
-
-
-class FieldsInfo {
-	
-}
-// $test = new FieldsInfo();
-// $test->get_info_user();
-
-
-
-class UserList {
+class UserUpdate {
 	public function get_info_user(){
 		$link = 'https://vlubov.amocrm.ru/api/v2/contacts/';
 
@@ -195,8 +171,6 @@ class UserList {
 		        ),
 		      ),
 		    );
-		  
-		
 		}
 		$data = ['update' => $update];
 		$link = "https://vlubov.amocrm.ru/api/v2/contacts";
@@ -242,10 +216,11 @@ class UserList {
 		
 	}
 }
-// $new_info = new UserList();
-// $new_info->update_multi_select();
+// Привязать рандомные значения к каждому контакту
+// $valeus_milti = new UserUpdate();
+// $valeus_milti->update_multi_select();
 
-
+// Создать поле мультисписок с 10ю значениями
 // $new_multiselect = new MultiSelect();
 // $new_multiselect->add_multi_select();
 
@@ -266,4 +241,3 @@ if ($n > 0 && $n < 10000) {
 } else {
 	echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }
-
