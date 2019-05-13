@@ -36,16 +36,15 @@ trait get_in_bd {
 			case 'leads':
 			$whatTheType = 'Сделка';
 			break;
+			case 'fields':
+
 		}
-		if ($this->type == 'fields') {
-			?> <pre> <?
-			print_r($result);
-		}
+		
 		$result=$result['_embedded']['items'];
 		$output= $whatTheType.' '."{$this->name}".' успешно добавлен'.'<br>'.'ID :'.PHP_EOL;
 		foreach($result as $v)
 		  if(is_array($v))
-		  	// ?> <pre> <?
+		  	
 		  	// print_r($result);
 		    echo $output.=$v['id'].'<br>';
 	}
@@ -86,22 +85,9 @@ class add_info {
 class MultiSelect {
 	use get_in_bd;
 	public $data;
-	public $who;
-	public function add_multi_select($who){
+	public function add_multi_select(){
 		
-		$this->who = $who;
 		$this->type = 'fields';
-		switch ($this->who) {
-			case 'contacts':
-			$number_type = '1';
-			break;
-			case 'companies':
-			$number_type = '3';
-			break;
-			case 'leads':
-			$number_type = '2';
-			break;
-		}
 		$this->data = array (
 	  		'add' => 
 	  			array (
@@ -109,16 +95,20 @@ class MultiSelect {
 	    		array (
 		        'name' => 'Мультилист',
 		        'type' => '5',
-		        'element_type' => $number_type,
+		        'element_type' => '1',
 		        'origin' => '123',
 		        'enums' => 
 		      array (
-		        0 => 'Значение 1',
+		        0 => ' Значение 1',
 		        1 => ' Значение 2',
 		        2 => ' Значение 3',
 		        3 => ' Значение 4',
 		        4 => ' Значение 5',
 		        5 => ' Значение 6',
+		        6 => ' Значение 7',
+		        7 => ' Значение 8',
+		        8 => ' Значение 9',
+		        9 => ' Значение 10',
 		      ),
 		    ),
 		  ),
@@ -128,28 +118,25 @@ class MultiSelect {
 	}
 }
 
-$values = [
-    0 => '107889',
-    1 => '107891',
-    2 => '107893',
-    3 => '107895',
-    4 => '107897',
-    5 => '107899',
-    ];
-$num = rand(1, 6);
-$k = array_rand($values, $num);
-// if (is_array($k)) {
-// foreach ($k as $key) {
-// 	$s = $values[$key];
-// 	$s2 = [$key => $s];
-	
-// }
-	
-// } else {
-// 	print_r($values[$k]);
-// }
-// print_r($s2);
+// $valuesid = [
+//     0 => '107889',
+//     1 => '107891',
+//     2 => '107893',
+//     3 => '107895',
+//     4 => '107897',
+//     5 => '107899',
+//     ];
+// $num = rand(1, 5); 
+// shuffle($valuesid);
+// $valuesid = array_slice($valuesid ,0, $num);
+// print_r($valuesid);
 
+
+class FieldsInfo {
+	
+}
+// $test = new FieldsInfo();
+// $test->get_info_user();
 
 
 
@@ -172,34 +159,52 @@ class UserList {
 		$out = curl_exec($curl);
 		curl_close($curl);
 		$result = json_decode($out,TRUE);
-		foreach($result as $v)
-			  if(is_array($v))
-			  	$this->ID = $v['id'];
+		$result = $result['_embedded']['items'];
+		$v = [];
+		foreach($result as $k) {
+			  if(is_array($k))
+			  	$v[] = $k['id'];
+			  }
+			  
+			   $this->ID = $v;
 	}
-	public function update_multi_select($values){
+	public function update_multi_select(){
+		$this->get_update();
+	
+		
+
 		$this->get_info_user();
-		$this->value = $values;
-		$data = array (
+		foreach ($this->ID as $key => $value) {
+		
+			$ar_keys = [];
+		foreach ($this->valuesid as $key => $v3) {
+			$ar_keys[] = $key; 
+		}
+		$valuesid = $ar_keys;
+		$num = rand(1, 10); 
+		shuffle($valuesid);
+		$valuesid = array_slice($valuesid ,0, $num);
+
+		$data[] = array (
 		  'update' => 
 		  array (
 		    0 => 
 		    array (
-		      'id' => $this->ID,
+		      'id' => $value,
 		      'updated_at' => '1557687060',
 		      'custom_fields' => 
 		      array (
 		        0 => 
 		        array (
-		          'id' => '78083',
+		          'id' => '83523',
 		          'values' => 
-		          array (
-		            $this->value,
-		          ),
+		            $valuesid,
 		        ),
 		      ),
 		    ),
 		  ),
 		);
+		}
 		$link = "https://vlubov.amocrm.ru/api/v2/contacts";
 
 		$headers[] = "Accept: application/json";
@@ -218,15 +223,39 @@ class UserList {
 		$out = curl_exec($curl);
 		curl_close($curl);
 		$result = json_decode($out,TRUE);
+	
+
+	}
+	public function get_update(){
+		$link = 'https://vlubov.amocrm.ru/api/v2/account?with=custom_fields';
+
+		$headers[] = "Accept: application/json";
+
+		 //Curl options
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+		curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-
+		undefined/2.0");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_URL, $link);
+		curl_setopt($curl, CURLOPT_HEADER,false);
+		curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
+		curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
+		$out = curl_exec($curl);
+		curl_close($curl);
+		$result = json_decode($out,TRUE);
+		$valuesid = $result['_embedded']['custom_fields']['contacts']['83523']['enums'];
+		$this->valuesid = $valuesid;
+		
 	}
 }
-// $new_info = new UserList();
-// $new_info->update_multi_select($values);
+$new_info = new UserList();
+$new_info->update_multi_select();
 
-if (isset($_POST['add_multi_list'])) {
-$new_multiselect = new MultiSelect();
-$new_multiselect->add_multi_select('contacts');
-}
+
+// $new_multiselect = new MultiSelect();
+// $new_multiselect->add_multi_select();
+
 
 $n = $_POST['n'];
 
@@ -241,7 +270,6 @@ if ($n > 0 && $n < 10000) {
 		$new_object->add_lead($name);
 
 	}
-
 } else {
 	echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }
