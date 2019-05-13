@@ -170,9 +170,6 @@ class UserList {
 	}
 	public function update_multi_select(){
 		$this->get_update();
-	
-		
-
 		$this->get_info_user();
 		foreach ($this->ID as $key => $value) {
 		
@@ -184,14 +181,10 @@ class UserList {
 		$num = rand(1, 10); 
 		shuffle($valuesid);
 		$valuesid = array_slice($valuesid ,0, $num);
-
-		$data[] = array (
-		  'update' => 
-		  array (
-		    0 => 
+		$update[] =  
 		    array (
 		      'id' => $value,
-		      'updated_at' => '1557687060',
+		      'updated_at' => '1557756000',
 		      'custom_fields' => 
 		      array (
 		        0 => 
@@ -201,10 +194,11 @@ class UserList {
 		            $valuesid,
 		        ),
 		      ),
-		    ),
-		  ),
-		);
+		    );
+		  
+		
 		}
+		$data = ['update' => $update];
 		$link = "https://vlubov.amocrm.ru/api/v2/contacts";
 
 		$headers[] = "Accept: application/json";
@@ -223,7 +217,6 @@ class UserList {
 		$out = curl_exec($curl);
 		curl_close($curl);
 		$result = json_decode($out,TRUE);
-	
 
 	}
 	public function get_update(){
@@ -249,8 +242,8 @@ class UserList {
 		
 	}
 }
-$new_info = new UserList();
-$new_info->update_multi_select();
+// $new_info = new UserList();
+// $new_info->update_multi_select();
 
 
 // $new_multiselect = new MultiSelect();
@@ -273,3 +266,4 @@ if ($n > 0 && $n < 10000) {
 } else {
 	echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }
+
