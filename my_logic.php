@@ -38,12 +38,21 @@ trait get_in_bd {
 			break;
 		}
 		$result=$result['_embedded']['items'];
-		$output= $whatTheType.' '."{$this->name}".' успешно добавлен'.'<br>'.'ID :'.PHP_EOL;
-		foreach($result as $v)
-		  if(is_array($v))
-		    echo $output.=$v['id'].'<br>';
+		foreach($result as $v) {
+            if (is_array($v)) {
+                    $s[] = $v;
+                    $s = array_pop($s);
+                //    echo 'Контакт успешно добавлен'.'<br>'.'ID :'.PHP_EOL . $s['id']. '<br>';
+
+            }
+        }
+
+
 	}
 }
+
+
+
 
 class UpdateToAll {
 	public function get_up(){
@@ -90,37 +99,6 @@ class UpdateToAll {
 //$new_up = new UpdateToAll();
 //$new_up->get_up();
 
-class add_info {
-	use get_in_bd;
-
-	public $name;
-	public $type;
-	public $data;
-	public function add_company($name){	
-		$this->name = $name;
-		$this->type = 'companies';
-		$this->data = array (
-		  	'add' => 
-		  	array (
-		    	0 => 
-		    	array (
-		    		'name' => $this->name,
-		    ),
-		  ),
-		);
-		$this->get_in_bd();
-	}
-	public function add_contact($name){
-		$this->name = $name;
-		$this->type = 'contacts';
-		$this->get_in_bd();
-	}
-	public function add_lead($name){
-		$this->name = $name;
-		$this->type = 'leads';
-		$this->get_in_bd();
-	}
-}
 
 class MultiSelect {
 	use get_in_bd;
@@ -278,10 +256,10 @@ class Add {
             $this->get_in_bd();
         }
         public function set_name($name){
-        $this->name = $name;
-        $this->add =[ 'add' => [
-                'name' => $this->name,
-            ],];
+
+        $this->add =[
+                'name' => $name,
+            ];
     }
 
 }
@@ -311,7 +289,12 @@ if ($n > 0 && $n < 10000) {
 } else {
 	echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }
-//$data['add'] = array_chunk($data['add'], 125, true);
-?> <pre> <?php
-print_r($data);
+$data = array_chunk($data['add'], 100, true);
+foreach ($data as $key => $value) {
+    $data = ['add' => $value];
+
+    $test_con->get_add('contacts',$data);
+}
+
+
 //$test_con->get_add('contacts',$data);
