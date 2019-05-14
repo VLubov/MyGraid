@@ -1,11 +1,10 @@
 <?php 
 namespace FirstEx;
 
-function __autoload( $className ) {
-  $className = str_replace( "..", "", $className );
-  require_once( "/mygraid/classes/$className.php" );
-  echo "Loaded classes/$className.php<br>";
-}
+spl_autoload_register(function ($class_name) {
+    include $_SERVER['DOCUMENT_ROOT'].'\\'.$class_name . '.php';
+    print_r($class_name);
+});
 
 
 $hash = '5c88c3456481874aa6a2d5948f7b32e0dfdcb142';
@@ -40,135 +39,10 @@ trait UseCurl {
     }
 }
 
-Class GetInBD {
-    use UseCurl;
-	public function get_in_bd(){
-	    $this->use_curl(true);
-			switch ($this->type) {
-			case 'contacts':
-			$whatTheType = 'Контакт';
-			break;
-			case 'companies':
-			$whatTheType = 'Компания';
-			break;
-			case 'leads':
-			$whatTheType = 'Сделка';
-			break;
-		}
-        $this->result=$this->result['_embedded']['items'];
-		foreach($this->result as $v) {
-            if (is_array($v)) {
-                    $s[] = $v;
-                    $s = array_pop($s);
-                //    echo 'Контакт успешно добавлен'.'<br>'.'ID :'.PHP_EOL . $s['id']. '<br>';
-
-            }
-        }
-
-
-	}
-}
-
-
 
 //$new_up = new UpdateToAll();
 //$new_up->get_up();
 
-
-class MultiSelect {
-    use UseCurl;
-	public $data;
-	public function add_multi_select(){
-		
-		$this->type = 'fields';
-		$this->data = array (
-	  		'add' => 
-	  			array (
-	    			0 => 
-	    		array (
-		        'name' => 'Мультилист',
-		        'type' => '5',
-		        'element_type' => '1',
-		        'origin' => '123',
-		        'enums' => 
-		      array (
-		        0 => ' Значение 1',
-		        1 => ' Значение 2',
-		        2 => ' Значение 3',
-		        3 => ' Значение 4',
-		        4 => ' Значение 5',
-		        5 => ' Значение 6',
-		        6 => ' Значение 7',
-		        7 => ' Значение 8',
-		        8 => ' Значение 9',
-		        9 => ' Значение 10',
-		      ),
-		    ),
-		  ),
-	);
-	$this->use_curl(true);
-	echo 'Мультисписок добвален' . '<br>'; 
-	}
-}
-
-class ContactUpdate {
-    use UseCurl;
-	public function get_info_user(){
-	    $this->type = 'contacts/';
-	    $this->date = '';
-        $this->use_curl(false);
-        $this->result = $this->result['_embedded']['items'];
-		$v = [];
-		foreach($this->result as $k) {
-			  if(is_array($k))
-			  	$v[] = $k['id'];
-			  }
-			  
-			   $this->ID = $v;
-	}
-	public function update_multi_select(){
-		$this->get_update();
-		$this->get_info_user();
-		foreach ($this->ID as $key => $value) {
-			$ar_keys = [];
-		foreach ($this->valuesid as $key => $v3) {
-			$ar_keys[] = $key; 
-		}
-		$valuesid = $ar_keys;
-		$num = rand(1, 10); 
-		shuffle($valuesid);
-		$valuesid = array_slice($valuesid ,0, $num);
-		$update[] =  
-		    array (
-		      'id' => $value,
-		      'updated_at' => '1557756000',
-		      'custom_fields' => 
-		      array (
-		        0 => 
-		        array (
-		          'id' => '83523',
-		          'values' => 
-		            $valuesid,
-		        ),
-		      ),
-		    );
-		  
-		
-		}
-		$data = ['update' => $update];
-		$this->data = $data;
-	    $this->type = 'contacts';
-	    $this->use_curl(true)
-	}
-	public function get_update(){
-	    $this->type = 'account?with=custom_fields';
-	    $this->data = '';
-        $this->use_curl(false);
-		$valuesid = $this->result['_embedded']['custom_fields']['contacts']['83523']['enums'];
-		$this->valuesid = $valuesid;
-		
-	}
-}
 // Привязать рандомные значения к каждому контакту
 // $valeus_milti = new ContactUpdate();
 // $valeus_milti->update_multi_select();
@@ -177,27 +51,8 @@ class ContactUpdate {
 // $new_multiselect = new MultiSelect();
 // $new_multiselect->add_multi_select();
 
-
-class Add extends GetInBD {
-        public function get_add($type, $data)
-        {
-            $this->data = $data;
-            $this->type = $type;
-            $this->get_in_bd();
-        }
-        public function set_name($name){
-
-        $this->add =[
-                'name' => $name,
-            ];
-    }
-
-}
-
 $n = $_POST['n'];
-
-
-    $new_es = new Add();
+$new_es = new Add();
 {
     if ($n > 0 && $n < 10000) {
        for ($i = 0; $i < $n; $i++) {
@@ -210,7 +65,7 @@ $n = $_POST['n'];
         } else {
             echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
         }
-    $data = array_chunk($data['add'], 500, true);
+    $data = array_chunk($data['add'], 100, true);
     foreach ($data as $key => $value) {
         $data = ['add' => $value];
         $new_es->get_add('contacts',$data);
