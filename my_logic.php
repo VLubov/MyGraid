@@ -277,7 +277,7 @@ if ($n > 0 && $n < 10000) {
 } else {
 	echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }
-$data = array_chunk($data['add'], 100, true);
+$data = array_chunk($data['add'], 500, true);
 foreach ($data as $key => $value) {
     $data = ['add' => $value];
 
