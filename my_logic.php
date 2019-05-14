@@ -45,10 +45,9 @@ trait get_in_bd {
 	}
 }
 
-class UpdateToAll extends ContactUpdate {
+class UpdateToAll {
 	public function get_up(){
-		$this->get_info_user();
-		$id_contact = array_pop($this->ID);
+		$id_contact = '671949';
 		$data = array (
 		  'update' => 
 		  array (
@@ -66,6 +65,7 @@ class UpdateToAll extends ContactUpdate {
 		    ),
 		  ),
 		);
+
 		$link = "https://vlubov.amocrm.ru/api/v2/contacts";
 
 		$headers[] = "Accept: application/json";
@@ -84,12 +84,11 @@ class UpdateToAll extends ContactUpdate {
 		$out = curl_exec($curl);
 		curl_close($curl);
 		$result = json_decode($out,TRUE);
-		?> <pre> <?php
-		print_r($id_contact);
 	}
 }
-$new_up = new UpdateToAll();
-$new_up->get_up();
+
+//$new_up = new UpdateToAll();
+//$new_up->get_up();
 
 class add_info {
 	use get_in_bd;
@@ -270,19 +269,49 @@ class ContactUpdate {
 // $new_multiselect->add_multi_select();
 
 
-$n = $_POST['n'];
+class Add {
+    use get_in_bd;
+        public function get_add($type, $data)
+        {
+            $this->data = $data;
+            $this->type = $type;
+            $this->get_in_bd();
+        }
+        public function set_name($name){
+        $this->name = $name;
+        $this->add =[ 'add' => [
+                'name' => $this->name,
+            ],];
+    }
 
+}
+
+$n = $_POST['n'];
+$test_con = new Add();
 if ($n > 0 && $n < 10000) {
 	for ($i = 0; $i < $n; $i++){
-		$name = randString();
-		$new_object = new add_info();
-		$new_object->add_company($name);
-		$name = randString();
-		$new_object->add_contact($name);
-		$name = randString();
-		$new_object->add_lead($name);
+        $name = randString();
+	    $test_con->set_name($name);
+	    foreach ($test_con as $key => $value) {
+
+                $data['add'][] = $value;
+
+        }
+
+        //$test_con->add_contacts();
+//		$name = randString();
+//		$new_object = new add_info();
+//		$new_object->add_company($name);
+//		$name = randString();
+//		$new_object->add_contact($name);
+//		$name = randString();
+//		$new_object->add_lead($name);
 
 	}
 } else {
 	echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }
+//$data['add'] = array_chunk($data['add'], 125, true);
+?> <pre> <?php
+print_r($data);
+//$test_con->get_add('contacts',$data);
