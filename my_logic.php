@@ -271,21 +271,9 @@ if ($n > 0 && $n < 10000) {
         $name = randString();
 	    $test_con->set_name($name);
 	    foreach ($test_con as $key => $value) {
-
                 $data['add'][] = $value;
-
         }
-
-        //$test_con->add_contacts();
-//		$name = randString();
-//		$new_object = new add_info();
-//		$new_object->add_company($name);
-//		$name = randString();
-//		$new_object->add_contact($name);
-//		$name = randString();
-//		$new_object->add_lead($name);
-
-	}
+}
 } else {
 	echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }
@@ -295,6 +283,3 @@ foreach ($data as $key => $value) {
 
     $test_con->get_add('contacts',$data);
 }
-
-
-//$test_con->get_add('contacts',$data);
