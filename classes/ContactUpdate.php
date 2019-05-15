@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vlubov
- * Date: 14.05.2019
- * Time: 19:03
- */
+namespace ContactUpdate;
 
-namespace UpdateContact;
-
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/my_logic.php');
+use FirstEx\UseCurl as UseCurl;
 
 class ContactUpdate {
     use UseCurl;

@@ -1,6 +1,8 @@
 <?php
-namespace UpdateEs;
+namespace UpdateToAll;
 
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/my_logic.php');
+use FirstEx\UseCurl as UseCurl;
 
 class UpdateToAll {
     use UseCurl;

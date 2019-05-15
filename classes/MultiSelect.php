@@ -1,6 +1,8 @@
 <?php
-namespace MultiList;
+namespace MultiSelect;
 
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/my_logic.php');
+use FirstEx\UseCurl as UseCurl;
 
 class MultiSelect {
     use UseCurl;

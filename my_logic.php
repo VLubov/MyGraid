@@ -1,10 +1,8 @@
 <?php 
 namespace FirstEx;
 
-spl_autoload_register(function ($class_name) {
-    include $_SERVER['DOCUMENT_ROOT'].'\\'.$class_name . '.php';
-    print_r($class_name);
-});
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/Add.php');
+use Add\Add;
 
 
 $hash = '5c88c3456481874aa6a2d5948f7b32e0dfdcb142';
@@ -14,7 +12,7 @@ auth_amo($mail, $hash, $sd);
 
 trait UseCurl {
     public function use_curl($use_array_data){
-        $this->data;
+        //$this->data;
         $link = "https://vlubov.amocrm.ru/api/v2/{$this->type}";
         $headers[] = "Accept: application/json";
 
