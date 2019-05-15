@@ -1,5 +1,5 @@
 <?php
-namespace UpdateToAll;
+namespace MyUpdateToAll;
 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/my_logic.php');
 use FirstEx\UseCurl as UseCurl;

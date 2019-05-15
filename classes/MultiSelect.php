@@ -1,26 +1,25 @@
 <?php
-namespace MultiSelect;
+namespace MyMultiSelect;
 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/my_logic.php');
 use FirstEx\UseCurl as UseCurl;
 
 class MultiSelect {
     use UseCurl;
-    public $data;
     public function add_multi_select(){
 
         $this->type = 'fields';
-        $this->data = array (
+        $this->data = [
             'add' =>
-                array (
+                [
                     0 =>
-                        array (
+                        [
                             'name' => 'Мультилист',
                             'type' => '5',
                             'element_type' => '1',
                             'origin' => '123',
                             'enums' =>
-                                array (
+                                [
                                     0 => ' Значение 1',
                                     1 => ' Значение 2',
                                     2 => ' Значение 3',
@@ -31,10 +30,10 @@ class MultiSelect {
                                     7 => ' Значение 8',
                                     8 => ' Значение 9',
                                     9 => ' Значение 10',
-                                ),
-                        ),
-                ),
-        );
+                                ],
+                        ],
+                ],
+        ];
         $this->use_curl(true);
         echo 'Мультисписок добвален' . '<br>';
     }

@@ -2,8 +2,12 @@
 namespace FirstEx;
 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/Add.php');
-use Add\Add;
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/MultiSelect.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/UpdateToAll.php');
 
+use MyUpdateToAll\UpdateToAll;
+use MyMultiSelect\MultiSelect;
+use MyAdd\Add;
 
 $hash = '5c88c3456481874aa6a2d5948f7b32e0dfdcb142';
 $mail = 'vlubov@team.amocrm.com';
@@ -12,7 +16,6 @@ auth_amo($mail, $hash, $sd);
 
 trait UseCurl {
     public function use_curl($use_array_data){
-        //$this->data;
         $link = "https://vlubov.amocrm.ru/api/v2/{$this->type}";
         $headers[] = "Accept: application/json";
 
@@ -36,36 +39,36 @@ trait UseCurl {
 
     }
 }
-
+function add_new($type, $n)
+{
+    $new_es = new Add();
+    if ($n > 0 && $n <= 10000) {
+        for ($i = 0; $i < $n; $i++) {
+            $name = randString();
+            $new_es->set_name($name);
+            foreach ($new_es as $key => $value) {
+                $data['add'][] = $value;
+            }
+        }
+    } else {
+        echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
+    }
+    $data = array_chunk($data['add'], 150, true);
+    foreach ($data as $key => $value) {
+        $data = ['add' => $value];
+        $new_es->get_add($type, $data);
+    }
+    return $new_es;
+}
 
 //$new_up = new UpdateToAll();
 //$new_up->get_up();
-
-// Привязать рандомные значения к каждому контакту
-// $valeus_milti = new ContactUpdate();
-// $valeus_milti->update_multi_select();
 
 // Создать поле мультисписок с 10ю значениями
 // $new_multiselect = new MultiSelect();
 // $new_multiselect->add_multi_select();
 
 $n = $_POST['n'];
-$new_es = new Add();
-{
-    if ($n > 0 && $n < 10000) {
-       for ($i = 0; $i < $n; $i++) {
-           $name = randString();
-           $new_es->set_name($name);
-           foreach ($new_es as $key => $value) {
-               $data['add'][] = $value;
-                }
-            }
-        } else {
-            echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
-        }
-    $data = array_chunk($data['add'], 100, true);
-    foreach ($data as $key => $value) {
-        $data = ['add' => $value];
-        $new_es->get_add('contacts',$data);
-    }
-}
+$type = 'contacts';
+
+add_new($type, $n)->update_multi_select();
