@@ -3,9 +3,9 @@ namespace FirstEx;
 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/Add.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/MultiSelect.php');
-require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/UpdateToAll.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/Update.php');
 
-use MyUpdateToAll\UpdateToAll;
+use MyUpdate\Update;
 use MyMultiSelect\MultiSelect;
 use MyAdd\Add;
 
@@ -39,36 +39,102 @@ trait UseCurl {
 
     }
 }
-function add_new($type, $n)
-{
-    $new_es = new Add();
-    if ($n > 0 && $n <= 10000) {
-        for ($i = 0; $i < $n; $i++) {
-            $name = randString();
-            $new_es->set_name($name);
-            foreach ($new_es as $key => $value) {
-                $data['add'][] = $value;
-            }
-        }
-    } else {
-        echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
-    }
-    $data = array_chunk($data['add'], 150, true);
-    foreach ($data as $key => $value) {
-        $data = ['add' => $value];
-        $new_es->get_add($type, $data);
-    }
-    return $new_es;
-}
 
-//$new_up = new UpdateToAll();
-//$new_up->get_up();
 
 // Создать поле мультисписок с 10ю значениями
 // $new_multiselect = new MultiSelect();
 // $new_multiselect->add_multi_select();
 
 $n = $_POST['n'];
-$type = 'contacts';
 
-add_new($type, $n)->update_multi_select();
+$new_con = new Add();
+if ($n > 0 && $n <= 10000) {
+    for ($i = 0; $i < $n; $i++) {
+        $name = randString();
+        $new_con->set_name($name);
+        foreach ($new_con as $key => $value) {
+            $data['add'][] = $value;
+        }
+    }
+} else {
+    echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
+}
+$data = array_chunk($data['add'], 150, true);
+foreach ($data as $key => $value) {
+    $data = ['add' => $value];
+
+}
+$new_con->get_add('contacts', $data);
+foreach ($new_con as $k => $value2) {
+    $id_contacts = $value2;
+}
+$new_con->update_multi_select();
+?> <pre> <?php
+
+$new_comp = new Add();
+if ($n > 0 && $n <= 10000) {
+    for ($i = 0; $i < $n; $i++) {
+        $name = randString();
+        $new_comp->set_name($name);
+        foreach ($new_comp as $key => $value) {
+            $data['add'][] = $value;
+        }
+    }
+} else {
+    echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
+}
+$data = array_chunk($data['add'], 150, true);
+foreach ($data as $key => $value) {
+    $data = ['add' => $value];
+    $new_comp->get_add('companies', $data);
+    foreach ($new_comp as $k => $value2) {
+        $id_companies = $value2;
+    }
+}
+$data= [];
+
+$new_lead = new Add();
+if ($n > 0 && $n <= 10000) {
+    for ($i = 0; $i < $n; $i++) {
+        $name = randString();
+        $new_lead->set_name($name);
+        foreach ($new_lead as $key => $value) {
+            $data['add'][] = $value;
+        }
+    }
+} else {
+    echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
+}
+$data = array_chunk($data['add'], 150, true);
+foreach ($data as $key => $value) {
+    $data = ['add' => $value];
+    $new_lead->get_add('leads', $data);
+    foreach ($new_lead as $k => $value2) {
+        $id_leads = $value2;
+    }
+}
+$data= [];
+
+$new_cust = new Add();
+if ($n > 0 && $n <= 10000) {
+    for ($i = 0; $i < $n; $i++) {
+        $name = randString();
+        $new_cust->set_name_customers($name);
+        foreach ($new_cust as $key => $value) {
+            $data['add'][] = $value;
+        }
+    }
+} else {
+    echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
+}
+$data = array_chunk($data['add'], 150, true);
+foreach ($data as $key => $value) {
+    $data = ['add' => $value];
+    $new_cust->get_add('customers', $data);
+    foreach ($new_cust as $k => $value2) {
+        $id_customers = $value2;
+    }
+}
+
+$update = new Update();
+$update->get_up_companies($id_companies, $id_contacts, $id_leads, $id_customers);

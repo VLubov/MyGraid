@@ -2,7 +2,9 @@
 namespace MyAdd;
 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/GetInBD.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/Update.php');
 use MyGetInBD\GetInBD;
+use MyUpdate\Update;
 
 class Add extends GetInBD {
     public function get_add($type, $data)
@@ -13,9 +15,14 @@ class Add extends GetInBD {
 
     }
     public function set_name($name){
-
         $this->add =[
             'name' => $name,
+        ];
+    }
+    public function set_name_customers($name){
+        $this->add =[
+            'name' => $name,
+            'next_date' => '1559210400',
         ];
     }
     public function update_multi_select(){
@@ -24,25 +31,24 @@ class Add extends GetInBD {
         foreach ($this->valuesid as $key => $v3) {
             $ar_keys[] = $key;
         }
-
         foreach ($this->ID as $keyid => $value) {
             $num = mt_rand(1, 10);
             shuffle($ar_keys);
             $valuesid = array_slice($ar_keys , 0 , $num);
             $update[] =
-                array (
+                [
                     'id' => $value,
-                    'updated_at' => '1557936000',
+                    'updated_at' => '1559318400',
                     'custom_fields' =>
-                        array (
+                        [
                             0 =>
-                                array (
+                                [
                                     'id' => '83523',
                                     'values' =>
                                         $valuesid,
-                                ),
-                        ),
-                );
+                                ],
+                        ],
+                ];
 
         }
         $data = ['update' => $update];
@@ -59,11 +65,7 @@ class Add extends GetInBD {
         $this->type = 'account?with=custom_fields';
         $this->use_curl(false);
         $valuesid = $this->result;
-
         $valuesid = $valuesid['_embedded']['custom_fields']['contacts']['83523']['enums'];
         $this->valuesid = $valuesid;
-
-
     }
-
 }

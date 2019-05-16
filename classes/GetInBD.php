@@ -11,8 +11,6 @@ Class GetInBD {
         $s = $this->result['_embedded']['items'];
         foreach ($s as $key => $value) {
             $this->ID[] = $value['id'];
-
         }
-
     }
 }
