@@ -42,7 +42,6 @@ class Add extends GetInBD {
                     'updated_at' => '1559318400',
                     'custom_fields' =>
                         [
-                            0 =>
                                 [
                                     'id' => $this->id_multi,
                                     'values' =>
@@ -77,6 +76,6 @@ class Add extends GetInBD {
                 return $key;
         }
        $this->id_multi = $key;
-        
+
     }
 }

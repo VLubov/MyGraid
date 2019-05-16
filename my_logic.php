@@ -12,9 +12,18 @@ use MyAdd\Add;
 $hash = '5c88c3456481874aa6a2d5948f7b32e0dfdcb142';
 $mail = 'vlubov@team.amocrm.com';
 $sd = 'vlubov';
+
+/**
+ *
+ */
 auth_amo($mail, $hash, $sd);
 
 // этот трейт тут не спроста
+
+/**
+ * Trait UseCurl
+ * @package FirstEx
+ */
 trait UseCurl {
     public function use_curl($use_array_data){
         $link = "https://vlubov.amocrm.ru/api/v2/{$this->type}";
