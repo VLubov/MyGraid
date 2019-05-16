@@ -7,7 +7,7 @@ use FirstEx\UseCurl as UseCurl;
 Class GetInBD {
     use UseCurl;
     public function get_in_bd(){
-        $this->use_curl(true);
+        $this->use_curl(TRUE);
         $s = $this->result['_embedded']['items'];
         foreach ($s as $key => $value) {
             $this->ID[] = $value['id'];

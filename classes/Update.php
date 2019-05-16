@@ -16,22 +16,18 @@ use UseCurl;
                 [
                     'id' => $value,
                     'updated_at' => '1559311200',
-                    'contacts_id' =>
-                            $id_contact,
+                    'contacts_id' => $id_contact,
                     'customers_id' => $id_customers[$k2],
                     'leads_id' => $id_leads[$k3],
 
                 ];
         }
         $data = ['update' => $update];
-        $data = array_chunk($data['update'], 500, true);
-        foreach ($data as $key => $value) {
-        $data = ['update' => $value];
+        foreach ((array_chunk($data['update'], 500, TRUE)) as $key => $chunked_data) {
+        $data = ['update' => $chunked_data];
         }
-        $this->type = 'companies';
         $this->data = $data;
-        $this->use_curl(true);
-        ?> <pre> <?php
-        print_r($this->result);
+        $this->type = 'companies';
+        $this->use_curl(TRUE);
     }
 }

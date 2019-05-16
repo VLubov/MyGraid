@@ -22,15 +22,15 @@ trait UseCurl {
 
         //Curl options
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,TRUE);
         curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-
 		undefined/2.0");
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        if ($use_array_data == true) {
+        if ($use_array_data == TRUE) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->data));
         }
         curl_setopt($curl, CURLOPT_URL, $link);
-        curl_setopt($curl, CURLOPT_HEADER,false);
+        curl_setopt($curl, CURLOPT_HEADER,FALSE);
         curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
         curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
         $out = curl_exec($curl);
@@ -60,12 +60,12 @@ if ($n > 0 && $n <= 10000) {
 } else {
     echo 'Вы не можете добавить больше 10000 или меньше 1 записи одновременно';
 }
-$data = array_chunk($data['add'], 150, true);
+$data = array_chunk($data['add'], 150, TRUE);
 foreach ($data as $key => $value) {
     $data = ['add' => $value];
 
 }
-$new_con->get_add('contacts', $data);
+$new_con->add('contacts', $data);
 foreach ($new_con as $k => $value2) {
     $id_contacts = $value2;
 }
@@ -87,7 +87,7 @@ if ($n > 0 && $n <= 10000) {
 $data = array_chunk($data['add'], 150, true);
 foreach ($data as $key => $value) {
     $data = ['add' => $value];
-    $new_comp->get_add('companies', $data);
+    $new_comp->add('companies', $data);
     foreach ($new_comp as $k => $value2) {
         $id_companies = $value2;
     }
@@ -109,7 +109,7 @@ if ($n > 0 && $n <= 10000) {
 $data = array_chunk($data['add'], 150, true);
 foreach ($data as $key => $value) {
     $data = ['add' => $value];
-    $new_lead->get_add('leads', $data);
+    $new_lead->add('leads', $data);
     foreach ($new_lead as $k => $value2) {
         $id_leads = $value2;
     }
@@ -131,7 +131,7 @@ if ($n > 0 && $n <= 10000) {
 $data = array_chunk($data['add'], 150, true);
 foreach ($data as $key => $value) {
     $data = ['add' => $value];
-    $new_cust->get_add('customers', $data);
+    $new_cust->add('customers', $data);
     foreach ($new_cust as $k => $value2) {
         $id_customers = $value2;
     }

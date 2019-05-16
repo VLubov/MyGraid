@@ -9,10 +9,7 @@ class MultiSelect {
     public function add_multi_select(){
 
         $this->type = 'fields';
-        $this->data = [
-            'add' =>
-                [
-                    0 =>
+        $this->data['add'][] =
                         [
                             'name' => 'Мультилист',
                             'type' => '5',
@@ -31,10 +28,9 @@ class MultiSelect {
                                     8 => ' Значение 9',
                                     9 => ' Значение 10',
                                 ],
-                        ],
-                ],
+
         ];
-        $this->use_curl(true);
+        $this->use_curl(TRUE);
         echo 'Мультисписок добвален' . '<br>';
     }
 }

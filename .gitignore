@@ -1,4 +1,7 @@
 MyGraid/*.txt
+.cookie.txt
+cookie.txt/
+*.cookie.txt
 cookie.txt
 MyGraid/cookie.txt
 .idea/*
