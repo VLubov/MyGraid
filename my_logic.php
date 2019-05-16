@@ -14,6 +14,7 @@ $mail = 'vlubov@team.amocrm.com';
 $sd = 'vlubov';
 auth_amo($mail, $hash, $sd);
 
+// этот трейт тут не спроста
 trait UseCurl {
     public function use_curl($use_array_data){
         $link = "https://vlubov.amocrm.ru/api/v2/{$this->type}";
