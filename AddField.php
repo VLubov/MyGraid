@@ -80,6 +80,7 @@ class AddField {
             $this->type = 'fields';
             $this->data = $data;
             $this->use_curl(true);
+            $this->get_date($type_es, $id_for_update, $text);
         }
     }
 }

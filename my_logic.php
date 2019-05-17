@@ -42,11 +42,13 @@ trait UseCurl {
 $auth = new Auth($hash, $mail, $sd);
 $auth->get_auth();
 
-//$type_es = $_POST['type_es'];
-//$id_for_update = $_POST['id'];
-//$text = $_POST['value_text'];
-$update = new AddField;
-$update->get_date('contacts', 2703061, 'Это успех!');
+$type_es = $_POST['type_es'];
+$id_for_update = $_POST['id'];
+$text = $_POST['value_text'];
+if (isset($_POST['enter'])) {
+    $update = new AddField;
+    $update->get_date($type_es, $id_for_update, $text);
+}
 pre($update);
 
 
