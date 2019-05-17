@@ -4,8 +4,10 @@ namespace SecondEx;
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/parametres.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/fun.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/Auth.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/Note.php');
 
 use AuthToAmo\Auth;
+use MyNote\Note;
 
 
 /**
@@ -13,12 +15,8 @@ use AuthToAmo\Auth;
  * @package SecondEx
  */
 trait UseCurl {
-    public function use_curl($use_array_data){
-        if ($use_array_data == TRUE) {
-            $link='https://'.$this->sd.'.amocrm.ru/private/api/auth.php?type=json';
-        } else {
-            $link = "https://vlubov.amocrm.ru/{$this->type}";
-        }
+    public function use_curl($use_array_data = FALSE){
+        $link = "https://vlubov.amocrm.ru/{$this->type}";
         $headers = ['Content-Type: application/json'];
         //Curl options
         $curl = curl_init();
@@ -49,3 +47,8 @@ trait UseCurl {
 
 $auth = new Auth($hash, $mail, $sd);
 $auth->get_auth();
+
+$add_notes = new Note;
+$add_notes->add_notes('1', '2701001');
+$add_notes->add_phone_contact('89007314555');
+$add_notes->add_call();

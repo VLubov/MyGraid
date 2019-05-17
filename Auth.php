@@ -20,6 +20,7 @@ use UseCurl;
             'USER_LOGIN'=>$this->mail, #Ваш логин (электронная почта)
             'USER_HASH'=>$this->hash #Хэш для доступа к API (смотрите в профиле пользователя)
     ];
+	$this->type = 'private/api/auth.php?type=json';
 	$this->data = $user;
     $this->use_curl(TRUE);
     $code = $this->code;
