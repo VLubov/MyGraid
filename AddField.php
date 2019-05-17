@@ -10,8 +10,7 @@ use SecondEx\UseCurl;
  */
 class AddField {
     use UseCurl;
-    public function get_date($type_es, $id_for_update, $value) {
-        $this->value = $value;
+    public function get_date($type_es, $id_for_update, $text) {
         $this->id_for_update = $id_for_update;
         $this->type = 'account?with=custom_fields';
         $this->use_curl(false);
@@ -23,11 +22,12 @@ class AddField {
                 $all_id_cust[] = $id_cust;
             }
             $data = array (
-                'add' =>
+                'update' =>
                     array (
                         0 =>
                             array (
-                                'name' => $this->id_for_update,
+                                'id' => $id_for_update,
+                                'updated_at' => '1559311200',
                                 'custom_fields' =>
                                     array (
                                         0 =>
@@ -37,7 +37,7 @@ class AddField {
                                                     array (
                                                         0 =>
                                                             array (
-                                                                'value' => $this->value,
+                                                                'value' => $text,
                                                             ),
                                                     ),
                                             ),
@@ -46,6 +46,7 @@ class AddField {
                     ),
             );
             $this->data = $data;
+            $this->type = $type_es;
             $this->use_curl(true);
 
         } else {
@@ -72,7 +73,6 @@ class AddField {
                                 'type' => '1',
                                 'element_type' => $element_type,
                                 'origin' => '1551',
-                                'enums' => 'Это успех!',
                                 'is_editable' => '1',
                             ),
                     ),
