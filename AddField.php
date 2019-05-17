@@ -56,17 +56,27 @@ class AddField {
                     $element_type = 12;
                     break;
                 case 'default' :
-                    $element_type = 1;
+                    $element_type = 0;
                     break;
             }
-            $data['add'][] =
-                [
-                    'name' => 'text',
-                    'type' => '1',
-                    'element_type' => $element_type,
-                    'origin' => '1551',
-                    'is_editable' => '1',
-                ];
+            if ($element_type !== 0) {
+                $data['add'][] =
+                    [
+                        'name' => 'text',
+                        'type' => '1',
+                        'element_type' => $element_type,
+                        'origin' => '1551',
+                        'is_editable' => '1',
+                    ];
+            } else {
+                $data['add'][] =
+                    [
+                        'name' => 'text',
+                        'type' => '1',
+                        'origin' => '1551',
+                        'is_editable' => '1',
+                    ];
+            }
             $this->type = 'fields';
             $this->data = $data;
             $this->use_curl(true);
