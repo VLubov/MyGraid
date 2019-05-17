@@ -50,22 +50,21 @@ trait UseCurl {
 
 $auth = new Auth($hash, $mail, $sd);
 $auth->get_auth();
-pre($auth);
 
-//switch ($_POST['type_es']){
-//    case 'Контакт' :
-//        $type_es = 'contacts';
-//        break;
-//    case 'Сделка' :
-//        $type_es = 'leads';
-//        break;
-//    case 'Компания' :
-//        $type_es = 'companies';
-//        break;
-//    case 'Покупатель' :
-//        $type_es = 'customers';
-//        break;
-//}
-//$update = new AddField;
-//$update->get_date($type_es, $_POST['id'], $_POST['value_text']);
-//echo "Данные добавленны";
+switch ($_POST['type_es']){
+    case 'Контакт' :
+        $type_es = 'contacts';
+        break;
+    case 'Сделка' :
+        $type_es = 'leads';
+        break;
+    case 'Компания' :
+        $type_es = 'companies';
+        break;
+    case 'Покупатель' :
+        $type_es = 'customers';
+        break;
+}
+$update = new AddField;
+$update->get_date($type_es, $_POST['id'], $_POST['value_text']);
+echo "Данные добавленны";
