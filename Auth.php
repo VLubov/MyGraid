@@ -1,12 +1,12 @@
 <?php
 namespace AuthToAmo;
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/parametres.php');
 
-
-require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/my_logic.php');
-use FirstEx\UseCurl;
-
+/**
+ * Class Auth
+ * @package AuthToAmo
+ */
 class Auth {
-	use UseCurl;
 
 	public $hash;
 	public function __construct($hash, $mail, $sd) {
@@ -16,10 +16,10 @@ class Auth {
 	}
 	public function authorized(){
 		$user=array(
-        'USER_LOGIN'=>$mail, #Ваш логин (электронная почта)
-        'USER_HASH'=>$hash #Хэш для доступа к API (смотрите в профиле пользователя)   
+        'USER_LOGIN'=>$this->mail, #Ваш логин (электронная почта)
+        'USER_HASH'=>$this->hash #Хэш для доступа к API (смотрите в профиле пользователя)
     );
-    $subdomain= $sd; #Наш аккаунт - поддомен
+    $subdomain= $this->sd; #Наш аккаунт - поддомен
     #Формируем ссылку для запроса
     $link='https://'.$subdomain.'.amocrm.ru/private/api/auth.php?type=json';
     /* Нам необходимо инициировать запрос к серверу. Воспользуемся библиотекой cURL (поставляется в составе PHP). Вы также
@@ -68,6 +68,7 @@ class Auth {
      нам придётся перевести ответ в формат, понятный PHP
      */
     $Response=json_decode($out,true);
+    $this->resp = $Response;
     $Response=$Response['response'];
     if(isset($Response['auth'])) #Флаг авторизации доступен в свойстве "auth"
      return 'Авторизация прошла успешно';
@@ -77,3 +78,6 @@ class Auth {
 		$this->authorized();
 	}
 }
+$auth = new Auth($hash, $mail, $sd);
+$auth->get_auth();
+
