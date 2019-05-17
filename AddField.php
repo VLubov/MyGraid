@@ -20,25 +20,23 @@ class AddField {
             foreach ($mas as $id_cust => $value_cust) {
                 $all_id_cust[] = $id_cust;
             }
-            $data['update'] =
-                    [
-                           [
-                                'id' => $id_for_update,
-                                'updated_at' => '1559311200',
-                                'custom_fields' =>
+            $data['update'][] =
+                [
+                    'id' => $id_for_update,
+                    'updated_at' => '1559311200',
+                    'custom_fields' =>
+                        [
+                            [
+                                'id' => $all_id_cust[$num_id],
+                                'values' =>
                                     [
-                                            [
-                                                'id' => $all_id_cust[$num_id],
-                                                'values' =>
-                                                   [
-                                                           [
-                                                                'value' => $text,
-                                                            ],
-                                                    ],
-                                            ],
+                                        [
+                                            'value' => $text,
+                                        ],
                                     ],
                             ],
-                    ];
+                        ],
+                ];
             $this->data = $data;
             $this->type = $type_es;
             $this->use_curl(true);
@@ -46,7 +44,7 @@ class AddField {
         } else {
             switch ($type_es) {
                 case 'leads' :
-                    $element_type = '2';
+                    $element_type = 2;
                     break;
                 case 'contacts' :
                     $element_type = 1;
@@ -57,17 +55,18 @@ class AddField {
                 case 'customers' :
                     $element_type = 12;
                     break;
+                case 'default' :
+                    $element_type = 1;
+                    break;
             }
-            $data['add'] =
-                    [
-                        [
-                                'name' => 'text',
-                                'type' => '1',
-                                'element_type' => $element_type,
-                                'origin' => '1551',
-                                'is_editable' => '1',
-                            ],
-                    ];
+            $data['add'][] =
+                [
+                    'name' => 'text',
+                    'type' => '1',
+                    'element_type' => $element_type,
+                    'origin' => '1551',
+                    'is_editable' => '1',
+                ];
             $this->type = 'fields';
             $this->data = $data;
             $this->use_curl(true);

@@ -58,7 +58,8 @@ switch ($_POST['type_es']){
 }
 $update = new AddField;
 $update->get_date($type_es, $_POST['id'], $_POST['value_text']);
-echo "Данные добавленны";
+pre($update);
+//echo "Данные добавленны";
 
 
 

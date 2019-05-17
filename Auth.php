@@ -15,10 +15,10 @@ class Auth {
 		$this->sd = $sd;
 	}
 	public function authorized(){
-		$user=array(
-        'USER_LOGIN'=>$this->mail, #Ваш логин (электронная почта)
-        'USER_HASH'=>$this->hash #Хэш для доступа к API (смотрите в профиле пользователя)
-    );
+		$user=[
+            'USER_LOGIN'=>$this->mail, #Ваш логин (электронная почта)
+            'USER_HASH'=>$this->hash #Хэш для доступа к API (смотрите в профиле пользователя)
+    ];
     $subdomain= $this->sd; #Наш аккаунт - поддомен
     #Формируем ссылку для запроса
     $link='https://'.$subdomain.'.amocrm.ru/private/api/auth.php?type=json';
@@ -43,7 +43,7 @@ class Auth {
     curl_close($curl); #Завершаем сеанс cURL
     /* Теперь мы можем обработать ответ, полученный от сервера. Это пример. Вы можете обработать данные своим способом. */
     $code=(int)$code;
-    $errors=array(
+    $errors=[
       301=>'Moved permanently',
       400=>'Bad request',
       401=>'Unauthorized',
@@ -52,7 +52,7 @@ class Auth {
       500=>'Internal server error',
       502=>'Bad gateway',
       503=>'Service unavailable'
-    );
+    ];
     try
     {
       #Если код ответа не равен 200 или 204 - возвращаем сообщение об ошибке
