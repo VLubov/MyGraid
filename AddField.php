@@ -68,6 +68,9 @@ class AddField {
                         'origin' => '1551',
                         'is_editable' => '1',
                     ];
+                $this->data = $data;
+                $this->use_curl(true);
+                $this->get_date($type_es, $id_for_update, $text);
             } else {
                 $data['add'][] =
                     [
@@ -76,11 +79,10 @@ class AddField {
                         'origin' => '1551',
                         'is_editable' => '1',
                     ];
+                $this->type = 'fields';
+                $this->data = $data;
+                $this->use_curl(true);
             }
-            $this->type = 'fields';
-            $this->data = $data;
-            $this->use_curl(true);
-            $this->get_date($type_es, $id_for_update, $text);
         }
     }
 }
