@@ -1,3 +1,6 @@
+<?php
+isset($_POST['enter']) ? require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/my_logic.php') : '';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,9 +9,13 @@
 </head>
 <body>
 	<form method="POST" class="center">
-		<input type="text" value="Введите сущность в единственном чиле" name="type_es">
-		<input type="text" value="Введите id сущности" name="id">
-		<input type="text" value="Значение поля" name="value_text">
+		<p>Введите данные в формате Сущность | ID сущности | Значение которое вы хотите присвоить</p>
+		<p>Тип сущности </p>
+		<input type="text" name="type_es">
+		<p>Введите id сущности</p>
+		<input type="text" name="id">
+		<p>Значение поля</p>
+		<input type="text" name="value_text">
 		<input type="submit" value="Отправить" name="enter">
 	</form>
 </body>

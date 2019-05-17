@@ -16,35 +16,29 @@ class AddField {
         $this->use_curl(false);
         $mas = $this->result['_embedded']['custom_fields'][$type_es];
         $num_id = array_search('1', array_column($mas, 'field_type'), FALSE);
-        pre($mas);
         if ($num_id !== FALSE) {
             foreach ($mas as $id_cust => $value_cust) {
                 $all_id_cust[] = $id_cust;
             }
-            $data = array (
-                'update' =>
-                    array (
-                        0 =>
-                            array (
+            $data['update'] =
+                    [
+                           [
                                 'id' => $id_for_update,
                                 'updated_at' => '1559311200',
                                 'custom_fields' =>
-                                    array (
-                                        0 =>
-                                            array (
+                                    [
+                                            [
                                                 'id' => $all_id_cust[$num_id],
                                                 'values' =>
-                                                    array (
-                                                        0 =>
-                                                            array (
+                                                   [
+                                                           [
                                                                 'value' => $text,
-                                                            ),
-                                                    ),
-                                            ),
-                                    ),
-                            ),
-                    ),
-            );
+                                                            ],
+                                                    ],
+                                            ],
+                                    ],
+                            ],
+                    ];
             $this->data = $data;
             $this->type = $type_es;
             $this->use_curl(true);
@@ -64,19 +58,16 @@ class AddField {
                     $element_type = 12;
                     break;
             }
-            $data = array (
-                'add' =>
-                    array (
-                        0 =>
-                            array (
+            $data['add'] =
+                    [
+                        [
                                 'name' => 'text',
                                 'type' => '1',
                                 'element_type' => $element_type,
                                 'origin' => '1551',
                                 'is_editable' => '1',
-                            ),
-                    ),
-            );
+                            ],
+                    ];
             $this->type = 'fields';
             $this->data = $data;
             $this->use_curl(true);
