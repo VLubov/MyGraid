@@ -20,23 +20,22 @@ class AddField {
             foreach ($mas as $id_cust => $value_cust) {
                 $all_id_cust[] = $id_cust;
             }
-            $data['update'][] =
-                [
-                    'id' => $id_for_update,
-                    'updated_at' => '1559311200',
-                    'custom_fields' =>
+            $data['update'][] = [
+                'id' => $id_for_update,
+                'updated_at' => '1559311200',
+                'custom_fields' =>
+                    [
                         [
-                            [
-                                'id' => $all_id_cust[$num_id],
-                                'values' =>
+                            'id' => $all_id_cust[$num_id],
+                            'values' =>
+                                [
                                     [
-                                        [
-                                            'value' => $text,
-                                        ],
+                                        'value' => $text,
                                     ],
-                            ],
+                                ],
                         ],
-                ];
+                    ],
+            ];
             $this->data = $data;
             $this->type = $type_es;
             $this->use_curl(true);
@@ -60,14 +59,13 @@ class AddField {
                     break;
             }
             if ($element_type !== 0) {
-                $data['add'][] =
-                    [
-                        'name' => 'text',
-                        'type' => '1',
-                        'element_type' => $element_type,
-                        'origin' => '1551',
-                        'is_editable' => '1',
-                    ];
+                $data['add'][] = [
+                    'name' => 'text',
+                    'type' => '1',
+                    'element_type' => $element_type,
+                    'origin' => '1551',
+                    'is_editable' => '1',
+                ];
                 $this->data = $data;
                 $this->use_curl(true);
                 $this->get_date($type_es, $id_for_update, $text);
