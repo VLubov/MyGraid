@@ -49,4 +49,6 @@ $auth = new Auth($hash, $mail, $sd);
 $auth->get_auth();
 
 $task = new Task;
-$task->add_task(2703041);
+//$task->get_list_tasks();
+$task->update_task(177661);
+pre($task);

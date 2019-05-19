@@ -26,4 +26,18 @@ class Task {
         $this->use_curl(TRUE);
         pre($this->result);
     }
+    public function get_list_tasks(){
+        $this->type = 'api/v2/tasks';
+        $this->use_curl();
+    }
+    public function update_task($task_id){
+        $this->data['update'][] = [
+            'id' => $task_id,
+            'updated_at' => '1559318400',
+            'text' => 'Текст выполненной задачи',
+            'is_completed' => '1',
+        ];
+        $this->type = 'api/v2/tasks';
+        $this->use_curl(TRUE);
+    }
 }
