@@ -4,10 +4,10 @@ namespace SecondEx;
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/parametres.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/fun.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/Auth.php');
-require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/Note.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/Task.php');
 
 use AuthToAmo\Auth;
-use MyNote\Note;
+use MyTask\Task;
 
 
 /**
@@ -48,7 +48,5 @@ trait UseCurl {
 $auth = new Auth($hash, $mail, $sd);
 $auth->get_auth();
 
-$add_notes = new Note;
-$add_notes->add_notes('1', '2701001');
-$add_notes->add_phone_contact('89007314555');
-$add_notes->add_call();
+$task = new Task;
+$task->add_task(2703041);
