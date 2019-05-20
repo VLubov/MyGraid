@@ -4,14 +4,15 @@ namespace FirstEx;
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/Add.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/MultiSelect.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/classes/Update.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/MyGraid/functions.php');
 
 use MyUpdate\Update;
 use MyMultiSelect\MultiSelect;
 use MyAdd\Add;
 
-$hash = '5c88c3456481874aa6a2d5948f7b32e0dfdcb142';
+$hash = '6cd2fa50548167525d3f6d1e16c77e999e7b550d';
 $mail = 'vlubov@team.amocrm.com';
-$sd = 'vlubov';
+$sd = 'vlubovwidget';
 
 /**
  *
@@ -26,7 +27,7 @@ auth_amo($mail, $hash, $sd);
  */
 trait UseCurl {
     public function use_curl($use_array_data){
-        $link = "https://vlubov.amocrm.ru/api/v2/{$this->type}";
+        $link = "https://vlubovwidget.amocrm.ru/api/v2/{$this->type}";
         $headers[] = "Accept: application/json";
 
         //Curl options
@@ -147,4 +148,8 @@ foreach ($data as $key => $value) {
 }
 
 $update = new Update();
-$update->get_up_companies($id_companies, $id_contacts, $id_leads, $id_customers);
+if ($n > 0 && $n <= 10000) {
+    for ($i = 0; $i < $n; $i++) {
+        $update->get_up_companies($id_companies, $id_contacts, $id_leads, $id_customers);
+    }
+}

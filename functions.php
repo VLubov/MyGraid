@@ -3,11 +3,11 @@
 function auth_amo($mail, $hash, $sd){
     $user=array(
         'USER_LOGIN'=>$mail, #Ваш логин (электронная почта)
-        'USER_HASH'=>$hash #Хэш для доступа к API (смотрите в профиле пользователя)   
+        'USER_HASH'=>$hash, #Хэш для доступа к API (смотрите в профиле пользователя)
     );
-    $subdomain= $sd; #Наш аккаунт - поддомен
+    #Наш аккаунт - поддомен
     #Формируем ссылку для запроса
-    $link='https://'.$subdomain.'.amocrm.ru/private/api/auth.php?type=json';
+    $link='https://'.$sd.'.amocrm.ru/private/api/auth.php?type=json';
     /* Нам необходимо инициировать запрос к серверу. Воспользуемся библиотекой cURL (поставляется в составе PHP). Вы также
     можете
     использовать и кроссплатформенную программу cURL, если вы не программируете на PHP. */
@@ -65,4 +65,8 @@ function randString(){
     $randName = str_shuffle($rString);
     $randName = substr($randName, 0, 6);
     return $randName;
+}
+function pre($n) {
+    ?> <pre> <?php
+    print_r($n);
 }

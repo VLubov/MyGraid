@@ -61,10 +61,12 @@ class Add extends GetInBD {
 //        print_r($this->ID);
     }
     public function get_values_id(){
+        $this->get_id_mult();
+            $id_multi = $this->id_multi;
         $this->type = 'account?with=custom_fields';
         $this->use_curl(FALSE);
         $valuesid = $this->result;
-        $valuesid = $valuesid['_embedded']['custom_fields']['contacts']['83523']['enums'];
+        $valuesid = $valuesid['_embedded']['custom_fields']['contacts'][$id_multi]['enums'];
         $this->valuesid = $valuesid;
     }
     public function get_id_mult(){
