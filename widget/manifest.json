@@ -1,11 +1,11 @@
 {
     "widget":{
-            "name": "widget.name",
-            "description": "widget.description",
-            "short_description": "widget.short_description",
-            "code": "mywidget",
-            "secret_key": "4d2009a01e3a0a3542609099fc9f5c370c37cc82cbd3dcdaf45420ba9d7e645b",
-            "version": "1.0.0",
+            "name": "mywidgetvlubovv",
+            "description": "mywidgetvlubovv",
+            "short_description": "mywidgetvlubovv",
+            "code": "mywidgetvlubovv",
+            "secret_key": "a9b32ae73888768c778faae38719601601691480d05c7fed952e90af7ed0befd",
+            "version": "2.0.7",
             "interface_version": 2,
             "init_once": false,
             "locale":[
