@@ -16,7 +16,7 @@ use UseCurl;
 		$this->sd = $sd;
 	}
 	public function authorized(){
-		$user=[
+		$user = [
             'USER_LOGIN'=>$this->mail, #Ваш логин (электронная почта)
             'USER_HASH'=>$this->hash #Хэш для доступа к API (смотрите в профиле пользователя)
     ];

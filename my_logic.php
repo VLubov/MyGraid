@@ -10,10 +10,6 @@ use AuthToAmo\Auth;
 use MyTask\Task;
 
 
-/**
- * Trait UseCurl
- * @package SecondEx
- */
 trait UseCurl {
     public function use_curl($use_array_data = FALSE){
         $link = "https://vlubov.amocrm.ru/{$this->type}";
@@ -47,8 +43,7 @@ trait UseCurl {
 
 $auth = new Auth($hash, $mail, $sd);
 $auth->get_auth();
-
+$task_id = $_POST['task_id'];
 $task = new Task;
-//$task->get_list_tasks();
-$task->update_task(177661);
-pre($task);
+$task->update_task($task_id);
+
