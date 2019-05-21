@@ -1,10 +1,6 @@
 <?php header('Access-Control-Allow-Origin: *'); 
 
-// $string = '"Organisation","Address","Postcode"' . PHP_EOL;
-// $string .= "\"$member_organ_field\",\"$member_address_field\",\"$member_post_field\"" . PHP_EOL;
-
-// file_put_contents('myfile.csv', $string); // write file
- $user=array(
+$user=array(
         'USER_LOGIN'=>'vlubov@team.amocrm.com', #Ваш логин (электронная почта)
         'USER_HASH'=> '6cd2fa50548167525d3f6d1e16c77e999e7b550d' #Хэш для доступа к API (смотрите в профиле пользователя)   
     );
@@ -52,16 +48,8 @@
     {
       die('Ошибка: '.$E->getMessage().PHP_EOL.'Код ошибки: '.$E->getCode());
     }
-    /*
-     Данные получаем в формате JSON, поэтому, для получения читаемых данных,
-     нам придётся перевести ответ в формат, понятный PHP
-     */
 
-
-
-
-
-?>
+?> <!-- Вообще разметка тут не нужна, но раз страница индексная то для порядка  -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,12 +61,10 @@
 	foreach ($data as $k => $v) {
 				$id[] = $v['id'];
 	}
-	
 }
 
 foreach ($id as $key_id => $value_id) {
 	$link = 'https://vlubovwidget.amocrm.ru/api/v2/leads?id='.$value_id;
-
 	$headers[] = "Accept: application/json";
 
 	 //Curl options
@@ -99,25 +85,92 @@ foreach ($id as $key_id => $value_id) {
 foreach ($r as $embedded => $item) {
 	$data_leads[] = $item['_embedded']['items'][0];
 }
-//print_r($data_leads);
 $fp = fopen($_SERVER['DOCUMENT_ROOT'].'/MyGraid/file.csv', 'w');
 foreach ($data_leads as $keys => $fields) {
-	$leads_cvs[] = [
-		$fields['id'],
-		$fields['name'],
-		$fields['created_at'],
-	];
-	foreach ($leads_cvs as $key6 => $dates) {	
+	$leads_cvs[] =[
+	 	$fields['id'],
+	 	$fields['name'],
+	 	$fields['created_at'],
+	 ];
+	 $tags[] = $fields['tags'];
+	 $contacts[] = $fields['contacts'];
+	 $companies[] = $fields['company'];
+}
+foreach ($fields['company'] as $com_key => $com_value) {
+	$companies[] = $value;
+}
+foreach ($leads_cvs as $key6 => $dates) {	
 	fputcsv($fp, $dates);
-      		// 	fputcsv($df, $row);
-      		// }
-   		}
+}
+foreach ($tags as $tags_key => $tags_value) {
+   	fputcsv($fp, $tags_value);		
+}
+foreach ($contacts as $contacts_key => $contacts_value) {
+   	fputcsv($fp, $contacts_value);
+}
+foreach ($companies as $companies_key => $companies_value) {
+	if (empty($companies_value) == FALSE) {
+		$companies_id[] = $companies_value['id'];
 	}
+}
+
+foreach ($companies_id as $key_id => $value_id_com) {
+		$link = 'https://vlubovwidget.amocrm.ru/api/v2/companies?id='.$value_id_com;
+
+		$headers[] = "Accept: application/json";
+
+		 //Curl options
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+		curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-
+		undefined/2.0");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_URL, $link);
+		curl_setopt($curl, CURLOPT_HEADER,false);
+		curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
+		curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
+		$out = curl_exec($curl);
+		curl_close($curl);
+		$result = json_decode($out,TRUE);
+		$res[] = $result;
+	}
+foreach ($res as $key_result_com => $value_result_com) {
+	foreach($value_result_com['_embedded']['items'] as $key_com => $value_com){
+		$name_company[] = $value_com['name'];
+		$id_contacts = $value_com['contacts']['id'];
+	}
+}
+
+fputcsv($fp, $name_company);
+
+foreach ($id_contacts as $key_id_cont => $value_id_cont) {
+		$link = 'https://vlubovwidget.amocrm.ru/api/v2/contacts/?id='.$value_id_cont;
+
+		$headers[] = "Accept: application/json";
+
+		 //Curl options
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+		curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-
+		undefined/2.0");
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_URL, $link);
+		curl_setopt($curl, CURLOPT_HEADER,false);
+		curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
+		curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
+		$out = curl_exec($curl);
+		curl_close($curl);
+		$result = json_decode($out,TRUE);
+		$res_contact[] = $result;
+}
+foreach ($res_contact as $key_result_cont => $value_result_cont) {
+	foreach($value_result_cont['_embedded']['items'] as $key_cont => $value_cont){
+		$name_contacts[] = $value_cont['name'];
+	}
+}  
+fputcsv($fp, $name_contacts);
 	
 fclose($fp);
-print_r($dates);
-
-
  ?>
 </body>
 </html>
