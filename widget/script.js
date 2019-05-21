@@ -38,9 +38,12 @@ define(['jquery'], function($){
                         c_data = JSON.stringify(c_data);
                         console.log(c_data);
                     $.ajax({
-                      url: 'http://127.0.0.1/mygraid/index.php',
+                      url: 'http://localhost:80/MyGraid/index.php',
                       type: "POST",
                       data: {data: c_data},
+                      success: function(data){
+                        console.log(data);
+                            } 
                         });
                     }
             },
