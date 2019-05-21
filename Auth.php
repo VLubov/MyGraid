@@ -18,7 +18,7 @@ use UseCurl;
 	public function authorized(){
 		$user=[
             'USER_LOGIN'=>$this->mail, #Ваш логин (электронная почта)
-            'USER_HASH'=>$this->hash #Хэш для доступа к API (смотрите в профиле пользователя)
+            'USER_HASH'=>$this->hash, #Хэш для доступа к API (смотрите в профиле пользователя)
     ];
 	$this->type = 'private/api/auth.php?type=json';
 	$this->data = $user;

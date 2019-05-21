@@ -10,10 +10,6 @@ use AuthToAmo\Auth;
 use MyTask\Task;
 
 
-/**
- * Trait UseCurl
- * @package SecondEx
- */
 trait UseCurl {
     public function use_curl($use_array_data = FALSE){
         $link = "https://vlubov.amocrm.ru/{$this->type}";
