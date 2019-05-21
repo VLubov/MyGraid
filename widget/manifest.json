@@ -1,0 +1,41 @@
+{
+    "widget":{
+            "name": "mywidgetvlubovv",
+            "description": "mywidgetvlubovv",
+            "short_description": "mywidgetvlubovv",
+            "code": "mywidgetvlubovv",
+            "secret_key": "a9b32ae73888768c778faae38719601601691480d05c7fed952e90af7ed0befd",
+            "version": "2.3.6",
+            "interface_version": 2,
+            "init_once": false,
+            "locale":[
+                    "ru",
+                    "en"
+                    ],
+            "installation": true
+            },
+    "locations":[
+            "ccard-1",
+            "clist-0",
+            "lcard-1",
+            "llist-0",
+            "settings"
+            ],
+    "settings":{
+                "login":{
+                        "name": "settings.login",
+                        "type": "text",
+                        "required": true
+                        },
+                "api_key":{
+                        "name": "settings.api_key",
+                        "type": "text",
+                        "required": true
+                        },
+                "account":{
+                        "name": "settings.account",
+                        "type": "text",
+                        "required": true
+                        }
+            }
+}

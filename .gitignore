@@ -1,0 +1,8 @@
+MyGraid/*.txt
+parametres.php
+cookie.txt
+*.css
+.idea/*
+MyGraid/widget/images/*
+MyGraid/widget/i18n/*
+*.img
